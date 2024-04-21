@@ -1,0 +1,77 @@
+import defaultTheme from 'tailwindcss/defaultTheme';
+
+/** @type {import('tailwindcss').Config} */
+export default {
+  darkMode: 'class',
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['Inter var', ...defaultTheme.fontFamily.sans],
+      },
+      colors: {
+        primary: {
+          50: '#f4f4f5',
+          100: '#e9e9eb',
+          200: '#c8c8d0',
+          300: '#a7a7b4',
+          400: '#65657f',
+          500: '#23234a',
+          600: '#202042',
+          700: '#16162f',
+          800: '#10101d',
+          900: '#0b0b14',
+        },
+        secondary: {
+          50: '#f3f5f7',
+          100: '#e6ebf0',
+          200: '#bfd0e0',
+          300: '#98b4d0',
+          400: '#4d7dae',
+          500: '#01368c',
+          600: '#013084',
+          700: '#01276b',
+          800: '#011f52',
+          900: '#01163e',
+        },
+        tertiary: {
+          50: '#f7f8f8',
+          100: '#eff2f3',
+          200: '#d6e0e1',
+          300: '#bdd0d1',
+          400: '#8aaeb0',
+          500: '#578c8f',
+          600: '#4f7e81',
+          700: '#42676b',
+          800: '#354f53',
+          900: '#2b3f43',
+        },
+        quaternary: {
+          50: '#f8f8f7',
+          100: '#f1f1ef',
+          200: '#dcdcd6',
+          300: '#c7c7bf',
+          400: '#9d9d9f',
+          500: '#737375',
+          600: '#69696b',
+          700: '#575758',
+          800: '#464648',
+          900: '#39393a',
+        },
+        quinary: {
+          50: '#f8f8f7',
+          100: '#f2f2ef',
+          200: '#dcdcd6',
+          300: '#c7c7bf',
+          400: '#9e9e9f',
+          500: '#757375',
+          600: '#6b6b6b',
+          700: '#595959',
+          800: '#484848',
+          900: '#3b3b3a',
+        },
+      },
+    },
+  },
+  plugins: [],
+};
