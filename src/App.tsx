@@ -1,5 +1,3 @@
-import './App.css';
-
 import { Button, Text } from './ui';
 
 function App() {
@@ -20,7 +18,7 @@ function App() {
         Red
       </Button>
       <Button onClick={() => alert('disabled button')} disabled>
-        Red
+        Disabled
       </Button>
     </>
   );

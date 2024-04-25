@@ -1,12 +1,12 @@
-import { type MouseEventHandler, type ComponentProps } from 'react';
+import { type ComponentProps } from 'react';
 import { cn } from '../../utils/cn';
 
 type Props = {
-  onClick: MouseEventHandler<HTMLButtonElement>;
   children: string;
 } & ComponentProps<'button'>;
 
-export const Button = ({ children, className, onClick, ...rest }: Props) => {
+export const Button = ({ children, className, ...rest }: Props) => {
+  const { onClick, disabled } = rest;
   return (
     <button
       className={cn(
@@ -14,10 +14,10 @@ export const Button = ({ children, className, onClick, ...rest }: Props) => {
         className,
       )}
       onClick={onClick}
-      disabled={rest.disabled}
+      disabled={disabled}
       {...rest}
     >
-      {rest.disabled ? 'Disabled' : children}
+      {children}
     </button>
   );
 };
