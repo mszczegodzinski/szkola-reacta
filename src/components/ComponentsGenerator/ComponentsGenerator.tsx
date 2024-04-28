@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { Button, Header, Text } from '../../ui';
 
-const ComponentsGenerator: React.FC = () => {
+export const ComponentsGenerator: React.FC = () => {
   const [selectedComponent, setSelectedComponent] = useState('');
   const [copied, setCopied] = useState(false);
 
@@ -69,5 +69,3 @@ const ComponentsGenerator: React.FC = () => {
     </div>
   );
 };
-
-export default ComponentsGenerator;
