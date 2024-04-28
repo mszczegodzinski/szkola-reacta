@@ -1,9 +1,10 @@
-import { Button, Text } from './ui';
+import ComponentsGenerator from './components/ComponentsGenerator/ComponentsGenerator';
+import { Button, Header, Text } from './ui';
 
 function App() {
   return (
     <>
-      <Text className="text-xl">Text component</Text>
+      {/* <Text className="text-xl">Text component</Text>
       <Button onClick={() => alert('Hey blue!')}>Blue</Button>
       <Button
         className="bg-green-500 hover:bg-green-400"
@@ -20,6 +21,10 @@ function App() {
       <Button onClick={() => alert('disabled button')} disabled>
         Disabled
       </Button>
+      <Header headingLevel="h1">h1 header</Header>
+      <Header headingLevel="h2">h2 header</Header>
+      <Header headingLevel="h4">h4 header</Header> */}
+      <ComponentsGenerator />
     </>
   );
 }
