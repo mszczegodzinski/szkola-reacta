@@ -1,107 +1,78 @@
-/**
- * Zadanie 4: Dynamiczny formularz
- * Przygotuj formularz, który będzie miał możliwość dodawania dynamicznych pól. To znaczy, że formularz ma zdefiniowanych kilka pól (możemy wciąż bazować na imieniu i nazwisku), ale możemy też stworzyć kilka dodatkowych. Będą to pola z zainteresowaniami użytkownika.
- * Instrukcje:
- * Stwórz formularz korzystając z React Hook Form, który będzie zawierał pola imię i nazwisko
- * Stwórz możliwość dodania zainteresowań użytkownika, ale w taki sposób, że będziemy mogli kliknąć w przycisk "add" aby pokazać na ekranie nowe pole typu input oraz "remove" aby takie pole usunąć z ekranu
- * Po wysłaniu formularza wyświetl dane na konsoli przeglądarki.
- */
-
-import { useState, ChangeEvent } from 'react';
-import { useForm, type SubmitHandler } from 'react-hook-form';
+import { useForm, type SubmitHandler, useFieldArray } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { DevTool } from '@hookform/devtools';
 
 import { Button, Input, Text } from '../../ui';
 import { PersonalInfoForm, PersonalInfoFormSchema } from './types';
-
-type FormData = {
-  name: string;
-  surname: string;
-  interests: string[];
-};
 
 export const DynamicForm = () => {
   const {
     register,
     handleSubmit,
-    watch,
+    control,
     formState: { errors },
   } = useForm<PersonalInfoForm>({
+    defaultValues: {
+      name: '',
+      surname: '',
+      interests: [
+        {
+          name: '',
+        },
+      ],
+    },
     resolver: zodResolver(PersonalInfoFormSchema),
+    mode: 'onBlur',
   });
-  const [formData, setFormData] = useState<FormData>({
-    name: '',
-    surname: '',
-    interests: [],
+
+  const { fields, append, remove } = useFieldArray({
+    name: 'interests',
+    control,
   });
-  const watchedFields = watch(['name', 'surname', 'interests']);
-  // const [name, surname, interests] = watchedFields;
 
-  console.log('watchedFields:', watchedFields);
-  console.log('errors:', errors);
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
-
-  const handleFormSubmit: SubmitHandler<PersonalInfoForm> = () => {
+  const handleFormSubmit: SubmitHandler<PersonalInfoForm> = (formData) => {
     console.log('Submitted data:', formData);
   };
-
-  const handleAddInput = () => {
-    setFormData((prevState) => ({
-      ...prevState,
-      interests: [...prevState.interests, ''],
-    }));
-  };
-
-  const handleInterestChange = (e: ChangeEvent<HTMLInputElement>, index: number) => {
-    const { value } = e.target;
-    const newInterests = [...formData.interests];
-    console.log('newInterests:', newInterests);
-    newInterests[index] = value;
-    setFormData((prevState) => ({
-      ...prevState,
-      interests: newInterests,
-    }));
-  };
-  console.log('formData:', formData);
 
   return (
     <div className="p-8">
       <h2 className="my-2">Personal info and interests - Dynamic form</h2>
       <form onSubmit={handleSubmit(handleFormSubmit)}>
         <div className="flex flex-col gap-y-3">
-          <Input label="name" {...register('name')} onChange={handleChange} error={errors.name} />
-          <Input label="surname" {...register('surname')} onChange={handleChange} error={errors.surname} />
+          <Input label="name" {...register('name')} error={errors.name} />
+          <Input label="surname" {...register('surname')} error={errors.surname} />
           <Text>Interests: </Text>
-          {formData.interests.map((interest, index) => {
-            console.log('register', register(`interests`));
+          {fields.map((field, index) => {
             return (
-              <Input
-                key={`interest-${index}`}
-                label={`interest ${index + 1}`}
-                {...register(`interests`)}
-                value={interest}
-                error={errors.interests?.[index]}
-                onChange={(e) => handleInterestChange(e, index)}
-              />
+              <div key={field.id} className="flex items-center gap-x-2">
+                <Input
+                  label={`interest ${index + 1}`}
+                  {...register(`interests.${index}.name` as const)}
+                  error={errors?.interests?.[index]?.name}
+                />
+                <div className="flex h-8">
+                  <Button type="button" onClick={() => remove(index)} className="bg-red-600 hover:bg-red-500">
+                    Remove
+                  </Button>
+                </div>
+              </div>
             );
           })}
         </div>
         <div>
-          <Button type="button" onClick={handleAddInput}>
-            Add
+          <Button
+            type="button"
+            onClick={() => append({ name: '' })}
+            className="my-2 bg-emerald-600 hover:bg-emerald-500"
+          >
+            Add new
           </Button>
         </div>
-        {/* <div>
+        <div className="mt-6">
           <Button type="submit">Submit</Button>
-        </div> */}
+        </div>
       </form>
+      <DevTool control={control} />
     </div>
   );
 };

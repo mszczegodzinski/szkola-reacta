@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { Button, Header, Text } from '../../ui';
 
-export const ComponentsGenerator: React.FC = () => {
+export const ComponentsGenerator = () => {
   const [selectedComponent, setSelectedComponent] = useState('');
   const [copied, setCopied] = useState(false);
 
@@ -15,9 +15,7 @@ export const ComponentsGenerator: React.FC = () => {
     }
   }, [copied]);
 
-  const handleComponentChange = (
-    event: React.ChangeEvent<HTMLSelectElement>,
-  ) => {
+  const handleComponentChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedComponent(event.target.value);
   };
 
@@ -57,10 +55,7 @@ export const ComponentsGenerator: React.FC = () => {
           <Text>Code: </Text>
           <div>
             <pre className="max-w-full text-wrap p-2">{code}</pre>
-            <Button
-              className={copied ? 'bg-green-500' : 'bg-blue-500'}
-              onClick={handleCopyCode}
-            >
+            <Button className={copied ? 'bg-green-500' : 'bg-blue-500'} onClick={handleCopyCode}>
               {copied ? 'Copied!' : 'Copy'}
             </Button>
           </div>
