@@ -10,7 +10,7 @@ export const Button = ({ children, className, ...rest }: Props) => {
   return (
     <button
       className={cn(
-        'cursor-pointer rounded-md border bg-blue-600 px-4 py-1 text-sm text-white hover:bg-blue-500 disabled:pointer-events-none disabled:opacity-50',
+        'cursor-pointer rounded-md border bg-blue-600 px-4 py-1 text-sm text-white transition-all hover:bg-blue-500 disabled:pointer-events-none disabled:opacity-50',
         className,
       )}
       onClick={onClick}
